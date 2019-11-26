@@ -1,0 +1,12 @@
+.mtj.tmp/
+
+*.jar
+*.war
+*.ear
+
+*.iml
+workspace.xml
+target/
+.idea/
+run/
+
