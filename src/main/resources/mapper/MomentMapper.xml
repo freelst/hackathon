@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmbccd.hackathon.dao.MomentDao">
+    <!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！-->
+    <resultMap id="BaseResultMap" type="com.cmbccd.hackathon.pojo.Moment">
+        <id column="KeyId" property="keyId" jdbcType="INTEGER" />
+        <result column="MomentId" property="momentId" jdbcType="NVARCHAR" />
+        <result column="OpenId" property="openId" jdbcType="NVARCHAR" />
+        <result column="CommercialTenantId" property="commercialTenantId" jdbcType="NVARCHAR"/>
+        <result column="ResourceType" property="resourceType" jdbcType="NVARCHAR" />
+        <result column="FileAddress" property="fileAddress" jdbcType="NVARCHAR" />
+        <result column="Clicks" property="clicks" jdbcType="INTEGER"/>
+        <result column="Details" property="details" jdbcType="NVARCHAR"/>
+        <result column="Source" property="source" jdbcType="NVARCHAR"/>
+        <result column="GifAddress" property="gifAddress" jdbcType="NVARCHAR"/>
+        <result column="CoverAddress" property="coverAddress" jdbcType="NVARCHAR"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.cmbccd.hackathon.pojo.Moment">
+        INSERT INTO Moment (MomentId, OpenId, CommercialTenantId, ResourceType,
+        FileAddress, Clicks, Details, Source, GifAddress, CoverAddress)
+        VALUE (#{momentId,jdbcType=NVARCHAR}, #{openId,jdbcType=NVARCHAR},
+        #{commercialTenantId,jdbcType=NVARCHAR}, #{resourceType,jdbcType=NVARCHAR},
+        #{clicks,jdbcType=INTEGER}, #{details,jdbcType=NVARCHAR}, #{source,jdbcType=NVARCHAR},
+        #{gifAddress,jdbcType=NVARCHAR}, #{coverAddress,jdbcType=NVARCHAR})
+    </insert>
+
+    <update id="addClicks" parameterType="java.lang.String">
+        UPDATE Moment SET Clicks = Clicks + 1 WHERE MomentId = #{0}
+    </update>
+</mapper>
