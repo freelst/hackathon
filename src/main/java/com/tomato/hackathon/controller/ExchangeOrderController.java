@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+import java.util.UUID;
+
 @RestController
 public class ExchangeOrderController {
     @Autowired
@@ -14,6 +17,10 @@ public class ExchangeOrderController {
 
     @PostMapping("getExchange")
     public int getExchange(@RequestBody ExchangeOrder exchangeOrder) {
+        String exchangeOrderId = UUID.randomUUID().toString();
+        Date createTime = new Date();
+        exchangeOrder.setExchangeOrderId(exchangeOrderId);
+        exchangeOrder.setCreateTime(createTime);
         return  exchangeOrderService.insert(exchangeOrder);
     }
 }

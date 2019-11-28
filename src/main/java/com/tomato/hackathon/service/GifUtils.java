@@ -1,11 +1,14 @@
 package com.tomato.hackathon.service;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.Java2DFrameConverter;
 import com.madgag.gif.fmsware.AnimatedGifEncoder;
+
+import javax.imageio.ImageIO;
 
 
 public class GifUtils {
@@ -53,5 +56,18 @@ public class GifUtils {
             ff.close();
         }
         return gifPath;
+    }
+
+    public static String buildCover(String filePath) throws IOException{
+        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(filePath);
+        grabber.start();
+        grabber.setFrameNumber(DEFAULT_START_FRAME);
+        Frame frame = grabber.grabImage();
+        Java2DFrameConverter converter = new Java2DFrameConverter();
+        BufferedImage bi = converter.getBufferedImage(frame);
+        String coverPath = filePath.substring(0, filePath.lastIndexOf(".")) + ".jpg";
+        ImageIO.write(bi, "jpg", new File(coverPath));
+        grabber.stop();
+        return coverPath;
     }
 }

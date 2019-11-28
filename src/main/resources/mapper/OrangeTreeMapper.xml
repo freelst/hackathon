@@ -12,18 +12,18 @@
     </resultMap>
 
     <insert id="insert" parameterType="com.tomato.hackathon.pojo.OrangeTree">
-        INSERT INTO Customer (OpenId, OrangeTreeId, Drumsticks, WaterDrops)
+        INSERT INTO OrangeTree (OpenId, OrangeTreeId, Drumsticks, WaterDrops)
         VALUE (#{openId,jdbcType=NVARCHAR}, #{orangeTreeId,jdbcType=NVARCHAR},
         #{drumsticks,jdbcType=NVARCHAR}, #{waterDrops,jdbcType=NVARCHAR})
     </insert>
 
     <update id="addDrumsticks" parameterType="com.tomato.hackathon.pojo.CountNumber">
-        UPDATE Customer SET Drumsticks = Drumsticks + #{number,jdbcType=INTEGER}
+        UPDATE OrangeTree SET Drumsticks = Drumsticks + #{number,jdbcType=INTEGER}
         WHERE OpenId = #{openId, jdbcType=NVARCHAR}
     </update>
 
     <update id="addWaterDrops" parameterType="com.tomato.hackathon.pojo.CountNumber">
-        UPDATE Customer SET WaterDrops = WaterDrops + #{number,jdbcType=INTEGER}
+        UPDATE OrangeTree SET WaterDrops = WaterDrops + #{number,jdbcType=INTEGER}
         WHERE OpenId = #{openId, jdbcType=NVARCHAR}
     </update>
 </mapper>

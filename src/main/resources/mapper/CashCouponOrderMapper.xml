@@ -14,7 +14,7 @@
     </resultMap>
 
     <insert id="insert" parameterType="com.tomato.hackathon.pojo.ExchangeOrder">
-        INSERT INTO ExchangeOrder (CashCouponOrderId, OpenId, CreateTime, Details,
+        INSERT INTO CashCouponOrder (CashCouponOrderId, OpenId, CreateTime, Details,
         CashCouponId, Source)
         VALUE (#{cashCouponOrderId,jdbcType=NVARCHAR}, #{openId,jdbcType=NVARCHAR},
         #{createTime,jdbcType=TIMESTAMP}, #{details,jdbcType=NVARCHAR},

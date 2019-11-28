@@ -12,11 +12,16 @@ public class MomentServiceImpl implements MomentService {
 
     @Override
     public int releaseMoment(Moment moment) {
-        return momentDao.insert(moment);
+        return momentDao.releaseMoment(moment);
     }
 
     @Override
     public int addClicks(String momentId) {
         return momentDao.addClicks(momentId);
+    }
+
+    @Override
+    public int uploadFiles(Moment moment) {
+        return momentDao.insertFiles(moment);
     }
 }

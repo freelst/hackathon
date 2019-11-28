@@ -6,4 +6,7 @@ public final class Constant {
 
     public static final String CUSTOMER_SOURCE = "Customer";
     public static final String COMMERCIAL_TENANT_SOURCE = "CommercialTenant";
+
+    public static final String DELICACY_SOURCE = "Delicacy";
+    public static final String FRESH_SOURCE = "Fresh";
 }

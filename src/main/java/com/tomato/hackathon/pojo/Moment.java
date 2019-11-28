@@ -51,26 +51,17 @@ public class Moment {
      */
     private String coverAddress;
 
-    public Moment(String momentId, String openId, String commercialTenantId, String resourceType, String fileAddress, String details, String source) {
+    public Moment(String momentId, String resourceType, String fileAddress) {
         this.momentId = momentId;
-        this.openId = openId;
-        this.commercialTenantId = commercialTenantId;
         this.resourceType = resourceType;
         this.fileAddress = fileAddress;
-        this.details = details;
-        this.source = source;
     }
 
-    public Moment(String momentId, String openId, String commercialTenantId, String resourceType, String fileAddress, Integer clicks, String details, String source, String gifAddress, String coverAddress) {
+    public Moment(String momentId, String openId, String commercialTenantId, String details, String source) {
         this.momentId = momentId;
         this.openId = openId;
         this.commercialTenantId = commercialTenantId;
-        this.resourceType = resourceType;
-        this.fileAddress = fileAddress;
-        this.clicks = clicks;
         this.details = details;
         this.source = source;
-        this.gifAddress = gifAddress;
-        this.coverAddress = coverAddress;
     }
 }
