@@ -13,7 +13,7 @@
     <context:annotation-config/>
 
     <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
-    <context:component-scan base-package="com.cmbccd.hackathon.controller">
+    <context:component-scan base-package="com.tomato.hackathon.controller">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
@@ -71,7 +71,7 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.cmbccd.hackathon.dao" />
+        <property name="basePackage" value="com.tomato.hackathon.dao" />
     </bean>
 
     <!-- 配置Mybatis的文件 ，mapperLocations配置**Mapper.xml文件位置，configLocation配置mybatis-config文件位置-->
@@ -82,6 +82,6 @@
     </bean>
 
     <!-- 自动扫描注解的bean -->
-    <context:component-scan base-package="com.cmbccd.hackathon.service" />
+    <context:component-scan base-package="com.tomato.hackathon.service" />
 
 </beans>
