@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cmbccd.hackathon.dao.ExchangeOrderDao">
+<mapper namespace="com.tomato.hackathon.dao.ExchangeOrderDao">
     <!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！-->
-    <resultMap id="BaseResultMap" type="com.cmbccd.hackathon.pojo.ExchangeOrder">
+    <resultMap id="BaseResultMap" type="com.tomato.hackathon.pojo.ExchangeOrder">
         <id column="KeyId" property="keyId" jdbcType="INTEGER" />
         <result column="ExchangeOrderId" property="exchangeOrderId" jdbcType="NVARCHAR" />
         <result column="OpenId" property="openId" jdbcType="NVARCHAR" />
@@ -11,7 +11,7 @@
         <result column="Weight" property="weight" jdbcType="NVARCHAR"/>
     </resultMap>
 
-    <insert id="insert" parameterType="com.cmbccd.hackathon.pojo.ExchangeOrder">
+    <insert id="insert" parameterType="com.tomato.hackathon.pojo.ExchangeOrder">
         INSERT INTO ExchangeOrder (ExchangeOrderId, OpenId, CreateTime, Weight)
         VALUE (#{exchangeOrderId,jdbcType=NVARCHAR}, #{openId,jdbcType=NVARCHAR},
         #{createTime,jdbcType=TIMESTAMP}, #{weight,jdbcType=NVARCHAR})
