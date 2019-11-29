@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomato.hackathon.dao.CommercialTenantDao">
+    <!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！-->
+    <resultMap id="BaseResultMap" type="com.tomato.hackathon.pojo.CommercialTenant">
+        <id column="KeyId" property="keyId" jdbcType="INTEGER" />
+        <result column="CommercialTenantId" property="commercialTenantId" jdbcType="NVARCHAR" />
+        <result column="Description" property="description" jdbcType="NVARCHAR" />
+        <result column="Address" property="address" jdbcType="NVARCHAR" />
+        <result column="Icon" property="icon" jdbcType="NVARCHAR"/>
+        <result column="Name" property="name" jdbcType="NVARCHAR" />
+    </resultMap>
+
+    <select id="getListByCustomerOrder" resultMap="BaseResultMap">
+        SELECT * FROM CommercialTenant WHERE CommercialTenantId IN (
+            SELECT DISTINCT CommercialTenantId FROM CashCouponOrder where
+            OpenId = #{0}
+        )
+    </select>
+</mapper>

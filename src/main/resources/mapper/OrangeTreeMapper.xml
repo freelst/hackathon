@@ -26,4 +26,8 @@
         UPDATE OrangeTree SET WaterDrops = WaterDrops + #{number,jdbcType=INTEGER}
         WHERE OpenId = #{openId, jdbcType=NVARCHAR}
     </update>
+
+    <select id="getTreeByOpenId" resultMap="BaseResultMap">
+        SELECT * FROM OrangeTree WHERE OpenId = #{0} LIMIT 1
+    </select>
 </mapper>

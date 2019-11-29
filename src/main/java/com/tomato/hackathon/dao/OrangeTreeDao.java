@@ -9,4 +9,6 @@ public interface OrangeTreeDao {
     int addDrumsticks(CountNumber countNumber);
 
     int addWaterDrops(CountNumber countNumber);
+
+    OrangeTree getTreeByOpenId(String openId);
 }

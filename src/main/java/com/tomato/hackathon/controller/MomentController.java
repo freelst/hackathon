@@ -23,45 +23,67 @@ public class MomentController {
     private MomentService momentService;
 
     @RequestMapping(value = "releaseMoment", method = RequestMethod.POST)
-    public int releaseMoment(@RequestBody MomentDetails momentDetails) {
-        Moment moment = new Moment(momentDetails.getMomentId(),
-                momentDetails.getOpenId(), momentDetails.getCommercialTenantId(),
-                momentDetails.getDetails(), momentDetails.getSource());
-        return momentService.releaseMoment(moment);
+    public String releaseMoment(@RequestBody Moment moment) {
+        String momentId = UUID.randomUUID().toString();
+        moment.setMomentId(momentId);
+        int code = momentService.releaseMoment(moment);
+        return gson.toJson(new BaseResponse(code));
     }
 
     @PostMapping("addClicks")
-    public int addClicks(@RequestBody ClickRequest clickRequest){
-        return momentService.addClicks(clickRequest.getMomentId());
+    public String addClicks(@RequestBody ClickRequest clickRequest){
+        int code = momentService.addClicks(clickRequest.getMomentId());
+        return gson.toJson(new BaseResponse(code));
     }
 
-    @PostMapping("uploadFiles")
-    public String uploadFiles(@RequestParam MultipartFile[] files, String type){
-        String path = "/Users/zhaohanqi/Desktop/resources/";
+    @PostMapping("uploadFiles/{type}")
+    public String uploadFiles(@PathVariable String type,
+                              @RequestParam MultipartFile[] file){
+        String path = "/usr/local/tomcat/webapps/ROOT/";
         String internetPath = "https://cloudzqy.com/";
         List<String> fileAddress = new ArrayList<>();
         List<String> relativeAddress = new ArrayList<>();
         try {
-            for (MultipartFile file : files) {
-                File destFile = new File(path, file.getOriginalFilename());
-                file.transferTo(destFile);
-                fileAddress.add(internetPath + file.getOriginalFilename());
-                relativeAddress.add(path + file.getOriginalFilename());
+            for (MultipartFile multipartFile : file) {
+                String fileName = UUID.randomUUID().toString();
+                if (StringUtils.equals(type, Constant.VIDEO_TYPE)) {
+                    fileName = fileName + ".mp4";
+                } else {
+                    fileName = fileName + ".jpg";
+                }
+                File destFile = new File(path, fileName);
+                multipartFile.transferTo(destFile);
+                fileAddress.add(internetPath + fileName);
+                relativeAddress.add(path + fileName);
             }
-            String momentId = UUID.randomUUID().toString();
-            Moment moment = new Moment(momentId, type, gson.toJson(fileAddress));
+            String uploadGifAddress = null;
+            String uploadCoverAddress = null;
             if (StringUtils.equals(type, Constant.VIDEO_TYPE) && fileAddress.size() == 1) {
                 String gifPath = GifUtils.buildGif(relativeAddress.get(0),20);
-                moment.setGifAddress(internetPath + gifPath.substring(gifPath.lastIndexOf("/") + 1));
+                uploadGifAddress = internetPath + gifPath.substring(gifPath.lastIndexOf("/") + 1);
                 String coverPath = GifUtils.buildCover(relativeAddress.get(0));
-                moment.setCoverAddress(internetPath + coverPath.substring(coverPath.lastIndexOf("/") + 1));
+                uploadCoverAddress = internetPath + coverPath.substring(coverPath.lastIndexOf("/") + 1);
             }
-            momentService.uploadFiles(moment);
-            return gson.toJson(new UploadResult(gson.toJson(fileAddress), moment.getGifAddress(),
-                    moment.getCoverAddress(), momentId));
+            return gson.toJson(new UploadResult(gson.toJson(fileAddress), uploadGifAddress,
+                    uploadCoverAddress));
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @PostMapping("getMomentsForAllCommercialTenant")
+    public String getMomentsForAllCommercialTenant() {
+        return gson.toJson(momentService.getMomentsForAllCommercialTenant());
+    }
+
+    @PostMapping("getMomentsByCommercialTenantId")
+    public String getMomentsByCommercialTenantId(@RequestBody CommercialTenantRequest request){
+        return gson.toJson(momentService.getMomentsByCommercialTenantId(request.getCommercialTenantId()));
+    }
+
+    @PostMapping("getListByCustomerOrder")
+    public String getListByCustomerOrder(@RequestBody CustomerRequest request){
+        return gson.toJson(momentService.getListByCustomerOrder(request.getOpenId()));
     }
 }

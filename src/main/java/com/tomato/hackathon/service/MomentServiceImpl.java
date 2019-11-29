@@ -1,14 +1,24 @@
 package com.tomato.hackathon.service;
 
+import com.tomato.hackathon.dao.CommercialTenantDao;
 import com.tomato.hackathon.dao.MomentDao;
+import com.tomato.hackathon.pojo.CommercialTenant;
 import com.tomato.hackathon.pojo.Moment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class MomentServiceImpl implements MomentService {
     @Autowired
     private MomentDao momentDao;
+
+    @Autowired
+    private CommercialTenantDao commercialTenantDao;
 
     @Override
     public int releaseMoment(Moment moment) {
@@ -21,7 +31,26 @@ public class MomentServiceImpl implements MomentService {
     }
 
     @Override
-    public int uploadFiles(Moment moment) {
-        return momentDao.insertFiles(moment);
+    public List<Moment> getMomentsForAllCommercialTenant() {
+        List<Moment> moments = momentDao.getMomentsForAllCommercialTenant();
+        Map<String, Integer> momentMap = new HashMap<>();
+        List<Moment> results = new ArrayList<>();
+        for (Moment moment : moments) {
+            if (!momentMap.containsKey(moment.getCommercialTenantId())) {
+                results.add(moment);
+                momentMap.put(moment.getCommercialTenantId(), moment.getClicks());
+            }
+        }
+        return results;
+    }
+
+    @Override
+    public List<Moment> getMomentsByCommercialTenantId(String commercialTenantId) {
+        return momentDao.getMomentsByCommercialTenantId(commercialTenantId);
+    }
+
+    @Override
+    public List<CommercialTenant> getListByCustomerOrder(String openId) {
+        return commercialTenantDao.getListByCustomerOrder(openId);
     }
 }

@@ -17,23 +17,33 @@
         <result column="CoverAddress" property="coverAddress" jdbcType="NVARCHAR"/>
     </resultMap>
 
-    <update id="releaseMoment" parameterType="com.tomato.hackathon.pojo.Moment">
-        UPDATE Moment SET OpenId = #{openId, jdbcType=NVARCHAR},
-        CommercialTenantId = #{commercialTenantId,jdbcType=NVARCHAR},
-        Source = #{source,jdbcType=NVARCHAR}, Details = #{details,jdbcType=NVARCHAR}
-        where MomentId = #{momentId,jdbcType=NVARCHAR}
-    </update>
+<!--    <update id="releaseMoment" parameterType="com.tomato.hackathon.pojo.Moment">-->
+<!--        UPDATE Moment SET OpenId = #{openId, jdbcType=NVARCHAR},-->
+<!--        CommercialTenantId = #{commercialTenantId,jdbcType=NVARCHAR},-->
+<!--        Source = #{source,jdbcType=NVARCHAR}, Details = #{details,jdbcType=NVARCHAR}-->
+<!--        where MomentId = #{momentId,jdbcType=NVARCHAR}-->
+<!--    </update>-->
 
     <update id="addClicks" parameterType="java.lang.String">
         UPDATE Moment SET Clicks = Clicks + 1 WHERE MomentId = #{0}
     </update>
 
-    <insert id="insertFiles" parameterType="com.tomato.hackathon.pojo.Moment">
-        INSERT INTO Moment (MomentId, ResourceType,
-        FileAddress, GifAddress, CoverAddress)
+    <insert id="releaseMoment" parameterType="com.tomato.hackathon.pojo.Moment">
+        INSERT INTO Moment (MomentId, ResourceType, FileAddress, GifAddress,
+        CoverAddress, OpenId, CommercialTenantId, Details, Source)
         VALUE (#{momentId,jdbcType=NVARCHAR}, #{resourceType,jdbcType=NVARCHAR},
         #{fileAddress,jdbcType=NVARCHAR}, #{gifAddress,jdbcType=NVARCHAR},
-        #{coverAddress,jdbcType=NVARCHAR})
+        #{coverAddress,jdbcType=NVARCHAR}, #{openId, jdbcType=NVARCHAR},
+        #{commercialTenantId, jdbcType=NVARCHAR}, #{details, jdbcType=NVARCHAR},
+        #{source, jdbcType=NVARCHAR})
     </insert>
+
+    <select id="getMomentsForAllCommercialTenant" resultMap="BaseResultMap">
+        SELECT * FROM Moment WHERE OpenId IS NULL ORDER BY Clicks DESC LIMIT 100
+    </select>
+
+    <select id="getMomentsByCommercialTenantId" resultMap="BaseResultMap">
+        SELECT * FROM Moment WHERE CommercialTenantId = #{0} ORDER BY Clicks LIMIT 100
+    </select>
 
 </mapper>
