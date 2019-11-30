@@ -15,6 +15,9 @@
         <result column="Source" property="source" jdbcType="NVARCHAR"/>
         <result column="GifAddress" property="gifAddress" jdbcType="NVARCHAR"/>
         <result column="CoverAddress" property="coverAddress" jdbcType="NVARCHAR"/>
+        <result column="Avatar" property="avatar" jdbcType="NVARCHAR"/>
+        <result column="CommercialTenantName" property="commercialTenantName" jdbcType="NVARCHAR"/>
+        <result column="NickName" property="nickName" jdbcType="NVARCHAR"/>
     </resultMap>
 
 <!--    <update id="releaseMoment" parameterType="com.tomato.hackathon.pojo.Moment">-->
@@ -30,20 +33,30 @@
 
     <insert id="releaseMoment" parameterType="com.tomato.hackathon.pojo.Moment">
         INSERT INTO Moment (MomentId, ResourceType, FileAddress, GifAddress,
-        CoverAddress, OpenId, CommercialTenantId, Details, Source)
+        CoverAddress, OpenId, CommercialTenantId, Details, Source, Avatar,
+        CommercialTenantName, NickName)
         VALUE (#{momentId,jdbcType=NVARCHAR}, #{resourceType,jdbcType=NVARCHAR},
         #{fileAddress,jdbcType=NVARCHAR}, #{gifAddress,jdbcType=NVARCHAR},
         #{coverAddress,jdbcType=NVARCHAR}, #{openId, jdbcType=NVARCHAR},
         #{commercialTenantId, jdbcType=NVARCHAR}, #{details, jdbcType=NVARCHAR},
-        #{source, jdbcType=NVARCHAR})
+        #{source, jdbcType=NVARCHAR}, #{avatar, jdbcType=NVARCHAR},
+        #{commercialTenantName, jdbcType=NVARCHAR}, #{nickName, jdbcType=NVARCHAR})
     </insert>
 
     <select id="getMomentsForAllCommercialTenant" resultMap="BaseResultMap">
-        SELECT * FROM Moment WHERE OpenId IS NULL ORDER BY Clicks DESC LIMIT 100
+        SELECT * FROM Moment ORDER BY Clicks DESC LIMIT 100
     </select>
 
     <select id="getMomentsByCommercialTenantId" resultMap="BaseResultMap">
         SELECT * FROM Moment WHERE CommercialTenantId = #{0} ORDER BY Clicks LIMIT 100
+    </select>
+
+    <select id="getCommercialTenantIdByMomentId" resultType="java.lang.String">
+        SELECT CommercialTenantId FROM Moment WHERE MomentId = #{0}
+    </select>
+
+    <select id="getListByOpenId" resultMap="BaseResultMap">
+        SELECT * FROM Moment WHERE openId = #{0}
     </select>
 
 </mapper>

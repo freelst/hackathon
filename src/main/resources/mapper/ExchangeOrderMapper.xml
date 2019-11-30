@@ -16,4 +16,8 @@
         VALUE (#{exchangeOrderId,jdbcType=NVARCHAR}, #{openId,jdbcType=NVARCHAR},
         #{createTime,jdbcType=TIMESTAMP}, #{weight,jdbcType=NVARCHAR})
     </insert>
+
+    <select id="getListByOpenId" resultMap="BaseResultMap">
+        SELECT * FROM ExchangeOrder WHERE OpenId = #{0}
+    </select>
 </mapper>

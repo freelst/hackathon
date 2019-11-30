@@ -42,6 +42,7 @@ public class GifUtils {
 
             ff.setFrameNumber(DEFAULT_START_FRAME);
             AnimatedGifEncoder en = new AnimatedGifEncoder();
+            en.setRepeat(0);
             en.setFrameRate(DEFAULT_FRAME_RATE);
             en.start(targetFile);
             for (int i = 0; i < frameCount && ff.getFrameNumber() < videoLength; i++) {

@@ -28,4 +28,8 @@
         UPDATE Customer SET WaterDrops = WaterDrops + #{number,jdbcType=INTEGER}
         WHERE OpenId = #{openId, jdbcType=NVARCHAR}
     </update>
+
+    <select id="getCustomerByOpenId" resultMap="BaseResultMap">
+        SELECT * FROM Customer WHERE OpenId = #{0}
+    </select>
 </mapper>

@@ -7,16 +7,28 @@
         <id column="KeyId" property="keyId" jdbcType="INTEGER" />
         <result column="CashCouponId" property="cashCouponId" jdbcType="NVARCHAR" />
         <result column="Details" property="details" jdbcType="NVARCHAR" />
-        <result column="SellCount" property="sellCount" jdbcType="INTEGER" />
-        <result column="Amount" property="amount" jdbcType="INTEGER"/>
+        <result column="Name" property="name" jdbcType="NVARCHAR" />
+        <result column="CashAmount" property="cashAmount" jdbcType="FLOAT"/>
+        <result column="Discount" property="discount" jdbcType="INTEGER"/>
+        <result column="Drumsticks" property="drumsticks" jdbcType="INTEGER"/>
+        <result column="ExchangeAmount" property="exchangeAmount" jdbcType="FLOAT"/>
+        <result column="SellCount" property="sellCount" jdbcType="INTEGER"/>
         <result column="CommercialTenantId" property="commercialTenantId" jdbcType="NVARCHAR"/>
-        <result column="Address" property="address" jdbcType="NVARCHAR"/>
-        <result column="Area" property="area" jdbcType="NVARCHAR"/>
         <result column="Icon" property="icon" jdbcType="NVARCHAR"/>
+        <result column="AllDrumsticks" property="allDrumsticks" jdbcType="NVARCHAR"/>
     </resultMap>
 
     <update id="addCount" parameterType="com.tomato.hackathon.pojo.CashCouponCount">
         UPDATE CashCoupon SET SellCount = SellCount + #{count,jdbcType=INTEGER}
         WHERE CashCouponId = #{cashCouponId, jdbcType=NVARCHAR}
     </update>
+
+    <select id="getListByCommercialTenantId" resultMap="BaseResultMap">
+        SELECT * FROM CashCoupon WHERE CommercialTenantId = #{0} LIMIT 100
+    </select>
+
+    <select id="getCashCouponListByFreshType" resultMap="BaseResultMap">
+        SELECT * FROM CashCoupon WHERE Drumsticks is not null
+    </select>
+
 </mapper>

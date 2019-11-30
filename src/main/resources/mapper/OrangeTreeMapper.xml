@@ -30,4 +30,8 @@
     <select id="getTreeByOpenId" resultMap="BaseResultMap">
         SELECT * FROM OrangeTree WHERE OpenId = #{0} LIMIT 1
     </select>
+
+    <update id="resetOrangeTree">
+        UPDATE OrangeTree SET WaterDrops = 0, Drumsticks = 0 WHERE OpenId = #{0}
+    </update>
 </mapper>

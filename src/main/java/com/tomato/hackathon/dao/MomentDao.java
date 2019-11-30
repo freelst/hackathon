@@ -13,4 +13,8 @@ public interface MomentDao {
     List<Moment> getMomentsForAllCommercialTenant();
 
     List<Moment> getMomentsByCommercialTenantId(String CommercialTenantId);
+
+    String getCommercialTenantIdByMomentId(String momentId);
+
+    List<Moment> getListByOpenId(String openId);
 }

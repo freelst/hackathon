@@ -25,4 +25,9 @@ public class CustomerServiceImpl implements CustomerService {
     public int addWaterDrops(CountNumber countNumber) {
         return customerDao.addWaterDrops(countNumber);
     }
+
+    @Override
+    public Customer getCustomerByOpenId(String openId) {
+        return customerDao.getCustomerByOpenId(openId);
+    }
 }

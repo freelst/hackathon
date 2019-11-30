@@ -7,4 +7,5 @@ public interface OrangeTreeService {
     int addWaterDrops(CountNumber countNumber);
     int addDrumsticks(CountNumber countNumber);
     OrangeTree getTreeByOpenId(String openId);
+    int resetOrangeTree(String openId);
 }

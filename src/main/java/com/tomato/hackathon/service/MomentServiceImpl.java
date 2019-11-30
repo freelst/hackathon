@@ -41,6 +41,7 @@ public class MomentServiceImpl implements MomentService {
                 momentMap.put(moment.getCommercialTenantId(), moment.getClicks());
             }
         }
+
         return results;
     }
 
@@ -52,5 +53,15 @@ public class MomentServiceImpl implements MomentService {
     @Override
     public List<CommercialTenant> getListByCustomerOrder(String openId) {
         return commercialTenantDao.getListByCustomerOrder(openId);
+    }
+
+    @Override
+    public String getCommercialTenantIdByMomentId(String momentId) {
+        return momentDao.getCommercialTenantIdByMomentId(momentId);
+    }
+
+    @Override
+    public List<Moment> getListByOpenId(String openId) {
+        return momentDao.getListByOpenId(openId);
     }
 }

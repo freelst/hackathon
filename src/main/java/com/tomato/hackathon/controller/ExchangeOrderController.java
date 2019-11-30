@@ -1,5 +1,7 @@
 package com.tomato.hackathon.controller;
 
+import com.google.gson.Gson;
+import com.tomato.hackathon.pojo.CustomerRequest;
 import com.tomato.hackathon.pojo.ExchangeOrder;
 import com.tomato.hackathon.service.ExchangeOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import java.util.UUID;
 
 @RestController
 public class ExchangeOrderController {
+    private Gson gson = new Gson();
     @Autowired
     private ExchangeOrderService exchangeOrderService;
 
@@ -21,6 +24,11 @@ public class ExchangeOrderController {
         Date createTime = new Date();
         exchangeOrder.setExchangeOrderId(exchangeOrderId);
         exchangeOrder.setCreateTime(createTime);
-        return  exchangeOrderService.insert(exchangeOrder);
+        return exchangeOrderService.insert(exchangeOrder);
+    }
+
+    @PostMapping("getExchangeOrderListByOpenId")
+    public String getExchangeOrderListByOpenId(@RequestBody CustomerRequest request) {
+        return gson.toJson(exchangeOrderService.getListByOpenId(request.getOpenId()));
     }
 }

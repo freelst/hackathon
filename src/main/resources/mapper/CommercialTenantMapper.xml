@@ -10,6 +10,10 @@
         <result column="Address" property="address" jdbcType="NVARCHAR" />
         <result column="Icon" property="icon" jdbcType="NVARCHAR"/>
         <result column="Name" property="name" jdbcType="NVARCHAR" />
+        <result column="MerchantType" property="merchantType" jdbcType="NVARCHAR"/>
+        <result column="Clicks" property="clicks" jdbcType="NVARCHAR"/>
+        <result column="Latitude" property="latitude" jdbcType="FLOAT"/>
+        <result column="Longitude" property="longitude" jdbcType="FLOAT"/>
     </resultMap>
 
     <select id="getListByCustomerOrder" resultMap="BaseResultMap">
@@ -18,4 +22,12 @@
             OpenId = #{0}
         )
     </select>
+    
+    <select id="getCommercialTenantListByClicks" resultMap="BaseResultMap">
+        SELECT * FROM CommercialTenant ORDER BY Clicks LIMIT 100
+    </select>
+
+    <update id="addClicks">
+        UPDATE CommercialTenant SET Clicks = Clicks + 1 WHERE CommercialTenantId = #{0}
+    </update>
 </mapper>

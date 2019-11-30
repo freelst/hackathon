@@ -15,4 +15,8 @@ public interface MomentService {
     List<Moment> getMomentsByCommercialTenantId(String commercialTenantId);
 
     List<CommercialTenant> getListByCustomerOrder(String openId);
+
+    String getCommercialTenantIdByMomentId(String momentId);
+
+    List<Moment> getListByOpenId(String openId);
 }

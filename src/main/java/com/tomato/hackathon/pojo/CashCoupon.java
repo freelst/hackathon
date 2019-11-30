@@ -6,11 +6,14 @@ import lombok.Data;
 public class CashCoupon {
     private Integer keyId;
     private String cashCouponId;
-    private Integer sellCount;
     private String details;
-    private String address;
-    private String area;
+    private String name;
+    private Float cashAmount;
+    private Integer discount;
+    private Integer drumsticks;
+    private Integer allDrumsticks;
+    private Float exchangeAmount;
+    private Integer sellCount;
     private String commercialTenantId;
-    private Integer amount;
     private String icon;
 }

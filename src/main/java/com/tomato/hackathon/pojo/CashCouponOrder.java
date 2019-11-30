@@ -16,4 +16,8 @@ public class CashCouponOrder {
      * 来源：美食订单 OR 生鲜订单
      */
     private String source;
+
+    private Integer drumsticks;
+
+    private Integer cashAmount;
 }

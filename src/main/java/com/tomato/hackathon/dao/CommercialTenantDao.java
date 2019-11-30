@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface CommercialTenantDao {
     List<CommercialTenant> getListByCustomerOrder(String openId);
+
+    List<CommercialTenant> getCommercialTenantListByClicks();
+
+    int addClicks(String CommercialTenantId);
 }

@@ -11,13 +11,29 @@
         <result column="Details" property="details" jdbcType="NVARCHAR"/>
         <result column="CashCouponId" property="cashCouponId" jdbcType="NVARCHAR" />
         <result column="Source" property="source" jdbcType="NVARCHAR"/>
+        <result column="Drumsticks" property="drumsticks" jdbcType="INTEGER"/>
+        <result column="CashMount" property="cashAmount" jdbcType="INTEGER"/>
     </resultMap>
 
     <insert id="insert" parameterType="com.tomato.hackathon.pojo.ExchangeOrder">
         INSERT INTO CashCouponOrder (CashCouponOrderId, OpenId, CreateTime, Details,
-        CashCouponId, Source)
+        CashCouponId, Source, Drumsticks, CashMount)
         VALUE (#{cashCouponOrderId,jdbcType=NVARCHAR}, #{openId,jdbcType=NVARCHAR},
         #{createTime,jdbcType=TIMESTAMP}, #{details,jdbcType=NVARCHAR},
-        #{cashCouponId,jdbcType=NVARCHAR}, #{source,jdbcType=NVARCHAR})
+        #{cashCouponId,jdbcType=NVARCHAR}, #{source,jdbcType=NVARCHAR},
+        #{drumsticks,jdbcType=INTEGER},#{cashAmount,jdbcType=INTEGER}
+        )
     </insert>
+
+    <select id="getCashCouponOrderListByOpenId" parameterType="com.tomato.hackathon.pojo.CashCouponOrderRequest"
+            resultType="com.tomato.hackathon.pojo.CashCouponOrderDto">
+        SELECT CashCouponOrder.CreateTime, CashCoupon.Discount, CashCouponOrder.Drumsticks, CommercialTenant.Icon,
+        CommercialTenant.`Name`, CashCouponOrder.CashAmount
+        FROM CashCouponOrder, CashCoupon, CommercialTenant WHERE CashCouponOrder.OpenId = #{openId,jdbcType=NVARCHAR}
+        AND Source = #{cashCouponOrderType,jdbcType=NVARCHAR}
+        AND CashCouponOrder.CashCouponId = CashCoupon.CashCouponId
+        AND CashCoupon.CommercialTenantId = CommercialTenant.CommercialTenantId
+        order by CreateTime
+    </select>
+
 </mapper>

@@ -9,4 +9,6 @@ public interface CustomerDao {
     int addDrumsticks(CountNumber countNumber);
 
     int addWaterDrops(CountNumber countNumber);
+
+    Customer getCustomerByOpenId(String openId);
 }

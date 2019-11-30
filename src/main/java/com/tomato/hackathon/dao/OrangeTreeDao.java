@@ -11,4 +11,6 @@ public interface OrangeTreeDao {
     int addWaterDrops(CountNumber countNumber);
 
     OrangeTree getTreeByOpenId(String openId);
+
+    int resetOrangeTree(String openId);
 }

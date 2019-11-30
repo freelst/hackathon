@@ -10,4 +10,8 @@ public class CommercialTenant {
     private String name;
     private String address;
     private String icon;
+    private String merchantType;
+    private Integer clicks;
+    private Float latitude;
+    private Float longitude;
 }

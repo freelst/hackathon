@@ -9,4 +9,6 @@ public interface CustomerService {
     int addDrumsticks(CountNumber countNumber);
 
     int addWaterDrops(CountNumber countNumber);
+
+    Customer getCustomerByOpenId(String openId);
 }

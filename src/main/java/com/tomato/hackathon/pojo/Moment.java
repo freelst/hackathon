@@ -51,6 +51,12 @@ public class Moment {
      */
     private String coverAddress;
 
+    private String avatar;
+
+    private String nickName;
+
+    private String commercialTenantName;
+
     public Moment(String momentId, String resourceType, String fileAddress) {
         this.momentId = momentId;
         this.resourceType = resourceType;

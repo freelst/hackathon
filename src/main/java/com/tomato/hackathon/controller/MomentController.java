@@ -1,9 +1,10 @@
 package com.tomato.hackathon.controller;
 
+import com.google.gson.Gson;
 import com.tomato.hackathon.pojo.*;
+import com.tomato.hackathon.service.CommercialTenantService;
 import com.tomato.hackathon.service.GifUtils;
 import com.tomato.hackathon.service.MomentService;
-import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +21,13 @@ public class MomentController {
     private Gson gson = new Gson();
 
     @Autowired
+    private CommercialTenantService commercialTenantService;
+
+    @Autowired
     private MomentService momentService;
 
-    @RequestMapping(value = "releaseMoment", method = RequestMethod.POST)
+    @RequestMapping(value = "releaseMoment", method = RequestMethod.POST,
+            produces = "text/json;charset=UTF-8")
     public String releaseMoment(@RequestBody Moment moment) {
         String momentId = UUID.randomUUID().toString();
         moment.setMomentId(momentId);
@@ -33,6 +38,8 @@ public class MomentController {
     @PostMapping("addClicks")
     public String addClicks(@RequestBody ClickRequest clickRequest){
         int code = momentService.addClicks(clickRequest.getMomentId());
+        String commercialTenantId = momentService.getCommercialTenantIdByMomentId(clickRequest.getMomentId());
+        commercialTenantService.addClicks(commercialTenantId);
         return gson.toJson(new BaseResponse(code));
     }
 
@@ -72,18 +79,23 @@ public class MomentController {
         return null;
     }
 
-    @PostMapping("getMomentsForAllCommercialTenant")
+    @RequestMapping(value = "getMomentsForAllCommercialTenant", produces = "text/json;charset=UTF-8", method = RequestMethod.POST)
     public String getMomentsForAllCommercialTenant() {
         return gson.toJson(momentService.getMomentsForAllCommercialTenant());
     }
 
-    @PostMapping("getMomentsByCommercialTenantId")
+    @RequestMapping(value = "getMomentsByCommercialTenantId",produces = "text/json;charset=UTF-8", method = RequestMethod.POST)
     public String getMomentsByCommercialTenantId(@RequestBody CommercialTenantRequest request){
         return gson.toJson(momentService.getMomentsByCommercialTenantId(request.getCommercialTenantId()));
     }
 
-    @PostMapping("getListByCustomerOrder")
+    @RequestMapping(value = "getListByCustomerOrder", produces = "text/json;charset=UTF-8", method = RequestMethod.POST)
     public String getListByCustomerOrder(@RequestBody CustomerRequest request){
         return gson.toJson(momentService.getListByCustomerOrder(request.getOpenId()));
+    }
+
+    @RequestMapping(value = "getListByOpenId", produces = "text/json;charset=UTF-8", method = RequestMethod.POST)
+    public String getListByOpenId(@RequestBody CustomerRequest customerRequest){
+        return gson.toJson(momentService.getListByOpenId(customerRequest.getOpenId()));
     }
 }
